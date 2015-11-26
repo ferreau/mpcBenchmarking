@@ -68,14 +68,24 @@ problem.D = D;        % optional (default, zero matrix)
 
 problem.umax =  [0.5; 0.5; 0.5];             % all constraint fields are optional
 problem.umin = -[0.5; 0.5; 0.5];             % (default values -inf/inf)
+%problem.dmax =  ;             % all constraint fields are optional
+%problem.dmin = -[0.05; 0.05; 0.05];             % (default values -inf/inf)
 problem.ymax = [0.5; 0.5; 0.5];
 problem.ymin = -[0.5; 0.5; 0.5];       % same for dmin,dmax,M,N,dNmin,dNmax,T
 
 problem.Q  = 100*eye(3);           % optional (default, identity matrix)
-problem.R  = 0.00001*eye(3);              % optional (default, zero matrix)
+problem.R  = 1*eye(3);              % optional (default, zero matrix)
 %problem.S  = zeros(2,1);       % optional (default, zero matrix)
 %problem.gu = 0;                % optional (default, zero vector)
 %problem.gy = zeros(2,1);       % optional (default, zero vector)
+
+%{
+problem.deltaInput = setupDeltaInputStruct();
+problem.deltaInput.active = Boolean.yes;
+problem.deltaInput.weight = problem.R;
+problem.deltaInput.dumax =  [0.05; 0.05; 0.05];
+problem.deltaInput.dumin = -[0.05; 0.05; 0.05];
+%}
 
 % [~, problem.P] = dlqr(problem.A, problem.B, problem.Q, ...
 %     problem.R, problem.S);     % optional (default, zero matrix)
@@ -93,6 +103,7 @@ problem.uIdx = [];                  % optional (default, []. Control horizon sam
 problem.lookAhead = Boolean.yes;    % optional (default, 0.  No access to future value of reference trajectories)
 problem.simModel  = [];             % optional (default, simulation model same as prediction model)
 
+problem.Ts = 60;
 
 %% define control scenario
 problem.variants = [1 2];

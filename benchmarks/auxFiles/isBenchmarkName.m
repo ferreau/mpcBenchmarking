@@ -23,7 +23,7 @@ function [ answer,benchmark ] = isBenchmarkName( nameOrBenchmark )
     if ( isa( nameOrBenchmark,'Benchmarks' ) > 0 )
         
         try
-            eval( ['benchmark = Benchmark_',char(curName),'();'] );
+            eval( ['benchmark = Benchmark_',char(nameOrBenchmark),'();'] );
             answer = 1;
             benchmark = nameOrBenchmark;
         catch %err

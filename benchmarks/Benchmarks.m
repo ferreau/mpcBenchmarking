@@ -12,27 +12,35 @@ classdef Benchmarks < uint32
 
 
     enumeration
-        aircraft                (1)
-        ballOnPlate             (2)
-        dcMotor                 (3)
-        toyExample1             (4)
-        forcesExample           (5)
-        helicopter              (6)
-        nonlinearCstr           (7)
-        pendulum                (8)
-        quadcopter              (9)
-        shell                   (10)
-        spacecraft              (11)
-        springMass              (12)
-        ...
-        compressor              (13)
-        nonlinearAcDrive        (14)
-        nonlinearChain          (15)
-        linearizedCstr          (16)
-        overheadCrane           (17)
-        fiordosExample          (18)
-        polytopicTerminal       (19)
-        dieselEngine            (20)
+        ... % part of public benchmark collection
+        aircraft                 (1)
+        ballOnPlate              (2)
+        dcMotor                  (3)
+        toyExample1              (4)
+        forcesExample            (5)
+        helicopter               (6)
+        nonlinearCstr            (7)
+        pendulum                 (8)
+        quadcopter               (9)
+        shell                    (10)
+        spacecraft               (11)
+        springMass               (12)
+        binaryDistillationColumn (13)
+        doubleInvertedPendulum   (14)
+        tripleInvertedPendulum   (15)
+        robotArm                 (16)
+        nonlinearChain           (17)
+        fiordosExample           (18)
+        overheadCrane            (19)
+        polytopicTerminal        (20)
+        ... % industrial, not part of public benchmark collection
+        compressor               (21)
+        ... % under development
+        nonlinearAcDrive         (22)
+        %powerNetworkSystem      (xx)
+        %underwaterVehicle       (xx)
+        %dieselEngine            (xx)
+        %linearizedCstr          (xx)
     end
     
 end

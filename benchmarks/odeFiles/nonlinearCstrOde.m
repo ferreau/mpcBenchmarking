@@ -1,4 +1,4 @@
-function [ dx ] = nonlinearCstrOde( t,y ) %#ok<INUSL>
+function [ dx ] = nonlinearCstrOde( ~,y )
 %nonlinearCstrOde does something.
 %
 %Inputs:

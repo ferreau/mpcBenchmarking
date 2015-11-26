@@ -14,7 +14,7 @@ function [ problem ] = Benchmark_quadcopter( variant )
 %
 % Authors:         Joachim Ferreau, Helfried Peyrl, 
 %                  Dimitris Kouzoupis, Andrea Zanelli
-% Last modified:   14/7/2015
+% Last modified:   25/11/2015
 
 
 % default variant
@@ -33,7 +33,7 @@ problem.info              = setupBenchmarkInfoStruct( );
 problem.info.ID           = uint32(Benchmarks.quadcopter);
 problem.info.name         = 'quadcopter';
 problem.info.description  = 'Position and velocity control of a quadcopter. Linearized model of quadcopter around steady state. 4 inputs, 12 outputs both with box constraints.';
-problem.info.reference    = 'MPT toolbox 3.0 demos, see http://control.ee.ethz.ch/~mpt/3/Main/BenchmarkExamples';
+problem.info.reference    = 'MPT toolbox 3.0 demos, see http://control.ee.ethz.ch/~mpt/3/Main/BenchmarkExamples. The MPC data have been provided by C.A. Pascucci and A. Bemporad from IMT Lucca.';
 problem.info.origin       = Origin.academicExample;
 problem.info.conditioning = Conditioning.undefined;
 problem.info.feasibility  = Feasibility.undefined;
@@ -41,7 +41,6 @@ problem.info.isOpenLoopStable = Boolean.yes;
 
 
 %% define MPC problem data
-load quadcopter_ssmodel
 
 % the model is linearized around the following steady state (added u0 to
 % all inputs in the plots to have same results as in MPT demo)
@@ -50,7 +49,12 @@ problem.x0 = zeros(12,1);
 %problem.x0 = 0.15*[ pi/6;  pi/6;  5;  5;  5; 5; 5*ones(6,1)];
 
 % system matrices
-[problem.A, problem.B, problem.C, problem.D] = ssdata(sysd);
+load quadcopter_abcd
+problem.A = A;
+problem.B = B;
+problem.C = C;
+problem.D = D;
+clear A B C D
 
 problem.umin = [9.6; 9.6; 9.6; 9.6] - u0;
 problem.umax = [13; 13; 13; 13] - u0;

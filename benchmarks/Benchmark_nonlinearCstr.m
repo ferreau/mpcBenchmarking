@@ -98,7 +98,7 @@ switch variant
         problem.simModel = [];
         
     case 2
-        % simulate the non linear model
+        % simulate the non-linear model
         for i = 1:problem(1).ni*5
             problem.yr{i} = [ 2.14; 1.09; 114.2; 112.9 ];
             problem.ur{i} = [ 14.19; -1113.5 ];
@@ -110,6 +110,3 @@ switch variant
 end
 
 end
-
-% REFERENCE: 
-% ...
