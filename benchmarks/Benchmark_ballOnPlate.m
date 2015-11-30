@@ -14,7 +14,7 @@ function [ problem ] = Benchmark_ballOnPlate( variant )
 %
 % Authors:         Joachim Ferreau, Helfried Peyrl, 
 %                  Dimitris Kouzoupis, Andrea Zanelli
-% Last modified:   14/7/2015
+% Last modified:   30/11/2015
 
 
 % default variant
@@ -71,23 +71,28 @@ problem.ymax = [0.01;  0.1];  % y(2): ball velocity [m/s]
 %% define control scenario
 problem.ni = 15;
 
-for i = 1:5*problem(1).ni % regulate to the origin
-    problem.yr{i} = [0;0.05];
-end
-
 problem.variants = [1 2 3 4];
 
 switch ( variant )
 
     case 1
-        % no active constraints in optimal solution
+        for i = 1:problem.ni+50
+            problem.yr{i} = [0;0.05];
+        end
+        % few active constraints in optimal solution
         problem.x0   = [-0.05; 0.05];
         
     case 2
+        for i = 1:problem.ni+50
+            problem.yr{i} = [0;0.05];
+        end
         % some active constraints in optimal solution
         problem.x0   = [-0.05; 0];
         
     case 3
+        for i = 1:problem.ni+300
+            problem.yr{i} = [0;0.05];
+        end
         % state constraints activated
         problem.x0 = [-0.17 0]';
         problem.umin = -0.03;
@@ -98,12 +103,11 @@ switch ( variant )
         problem.x0 = [-0.15 0]';
         %problem.umin = -0.04;
         problem.yr = [];
-        for i = 1:175 % regulate to the origin
+        for i = 1:problem.ni+200 % regulate to the origin
             problem.yr{i} = [0;0];
         end
         
     otherwise
-        
         error( 'Invalid variant number!' );
 end
 

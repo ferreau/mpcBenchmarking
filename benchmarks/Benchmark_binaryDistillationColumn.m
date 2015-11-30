@@ -14,7 +14,7 @@ function [ problem ] = Benchmark_binaryDistillationColumn( variant )
 %
 % Authors:         Joachim Ferreau, Helfried Peyrl, 
 %                  Dimitris Kouzoupis, Andrea Zanelli
-% Last modified:   24/11/2015
+% Last modified:   30/11/2015
 
 
 % default variant
@@ -115,16 +115,20 @@ problem.simModel  = [];             % optional (default, simulation model same a
 
 
 %% define control scenario
-problem.variants = [1];
+problem.variants = [1 2];
 
 switch ( variant )
     
     case 1
-       
-        for i=1:60
+        for i=1:problem.ni+50
             problem.yr{i} = [0;0;0];
         end
-
+        
+    case 2
+        problem.uIdx = [1:5];
+        for i=1:problem.ni+50
+            problem.yr{i} = [0;0;0];
+        end
 
     otherwise
         error( 'Invalid variant number!' );

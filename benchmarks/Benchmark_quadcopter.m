@@ -14,7 +14,7 @@ function [ problem ] = Benchmark_quadcopter( variant )
 %
 % Authors:         Joachim Ferreau, Helfried Peyrl, 
 %                  Dimitris Kouzoupis, Andrea Zanelli
-% Last modified:   25/11/2015
+% Last modified:   30/11/2015
 
 
 % default variant
@@ -76,49 +76,39 @@ problem.variants = [1 2 3 4 5 6];
 switch variant
 
     case 1
-        
 		problem.uIdx = [1 2];
         for i=1:problem.ni+30
             problem.yr{i} = [0;0;1;0;0;0;zeros(6,1)];
         end
-
         
 	case 2
-
         problem.ni = 20;
         for i=1:problem.ni+50
-            problem.yr{i} = [0;0;0;0;0;0;zeros(6,1)];
+            problem.yr{i} = [0;0;1;0;0;0;zeros(6,1)];
         end
 
-        
     case 3
-
-        problem.ni = 100;
+        problem.ni = 50;
         for i=1:problem.ni+50
-            problem.yr{i} = [0;0;0;0;0;0;zeros(6,1)];
+            problem.yr{i} = [0;0;1;0;0;0;zeros(6,1)];
         end
-        
         
     case 4 % relax input constraints and penalize more inputs: active output constraints 
-
         problem.Q = 0.0001*problem.Q;
         problem.R = 1000*problem.R;
-        
         problem.x0 = 0.3*[ pi/6;  pi/6;  5;  5;  5; 5; 5*ones(6,1)];
         problem.umin = [9.6; 9.6; 9.6; 9.6] - u0 - 5*ones(4,1);
         problem.umax = [13; 13; 13; 13] - u0 + 5*ones(4,1);
-        
         problem.ymin = [-pi/6; -pi/6; -Inf; -Inf; -Inf; -1; -Inf(6,1)];
         problem.ymax = [ pi/6;  pi/6;  Inf;  Inf;  Inf; Inf; Inf(6,1)];
         problem.ni = 20;
         for i=1:problem.ni+150
             problem.yr{i} = [0;0;0;0;0;0;zeros(6,1)];
         end
-
-        
+       
     case 5  % polytopic contraints: the quadrocopter has to lie in a
             % cylinder having for basis a regular poligon (++check consistency wrt reality)
-            problem.x0 = 0.2*[ pi/6;  pi/6;  5;  8;  8; 5; 10*ones(6,1)];
+        problem.x0 = 0.2*[ pi/6;  pi/6;  5;  8;  8; 5; 10*ones(6,1)];
         r = 3.5;
         problem.umin = [9.6; 9.6; 9.6; 9.6] - u0 - 5*ones(4,1);
         problem.umax = [13; 13; 13; 13] - u0 + 5*ones(4,1);
@@ -136,14 +126,11 @@ switch variant
                         0   0   0   1   1   0   0   0   0   0   0   0;  ...
                         0   0   0  1   1   0   0   0   0   0   0   0;  ...
                         0   0   0  -1   1   0   0   0   0   0   0   0;    ];
-                        
         problem.N = zeros(4,4);
         problem.dmin = [-Inf; -Inf;-r;-r];
-        problem.dmax = [r; r;Inf; Inf];
-        
+        problem.dmax = [r; r;Inf; Inf];       
 
-    case 6 % fiordos
-
+    case 6
         [~, problem.P] = dlqr(problem.A, problem.B, problem.Q, ...
         problem.R, problem.S);     % optional (default, zero matrix)
         problem.P = diag(diag(problem.P));
@@ -154,7 +141,6 @@ switch variant
         for i=1:problem.ni+50
             problem.yr{i} = [0;0;0;0;0;0;zeros(6,1)];
         end
-
 
 	otherwise       
         error( 'Invalid variant number!' );

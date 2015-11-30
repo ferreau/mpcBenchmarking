@@ -14,7 +14,7 @@ function [ problem ] = Benchmark_shell( variant )
 %
 % Authors:         Joachim Ferreau, Helfried Peyrl, 
 %                  Dimitris Kouzoupis, Andrea Zanelli
-% Last modified:   14/7/2015
+% Last modified:   30/11/2015
 
 
 % default variant
@@ -41,6 +41,8 @@ problem.info.isOpenLoopStable = Boolean.yes;
 
 
 %% define MPC benchmark data
+
+problem.Ts = 60; % [s]
 
 % example of a simple LTI system
 s = tf('s');
@@ -98,31 +100,35 @@ problem.deltaInput.dumin = -[0.05; 0.05; 0.05];
 
 problem.x0 = [1 0.2 1 0.2 0.3 0.1 0 0.2 0.22]';     % compulsory      
 
-problem.ni   = 20;                  % compulsory      
 problem.uIdx = [];                  % optional (default, []. Control horizon same as prediction horizon)
 problem.lookAhead = Boolean.yes;    % optional (default, 0.  No access to future value of reference trajectories)
 problem.simModel  = [];             % optional (default, simulation model same as prediction model)
 
-problem.Ts = 60;
 
 %% define control scenario
-problem.variants = [1 2];
+problem.variants = [1 2 3];
 
 switch ( variant )
     
     case 1
-        
+        problem.ni = 10;
         for i=1:problem.ni+30
             problem.yr{i} = [0;0;0];
         end
 
-
 	case 2
-        problem.ni = 40;
-        for i=1:problem.ni+100
+        problem.ni = 20;
+        for i=1:problem.ni+30
             problem.yr{i} = [0;0;0];
         end
-
+        
+    case 3
+        problem.ni = 10;
+        for i=1:problem.ni+30
+            problem.yr{i} = [0;0;0];
+        end
+        problem.ymax = [0.5; 0.5; 0.5];
+        problem.ymin = [0.0; 0.0; 0.0];
         
     otherwise
         error( 'Invalid variant number!' );

@@ -1,4 +1,4 @@
-function [ benchmarkNames,benchmarkVariants ] = getBenchmarkList( )
+function [ benchmarkNames,benchmarkVariants,benchmarkFeatures ] = getBenchmarkList( )
 %getBenchmarkList does something.
 %
 %Inputs:
@@ -14,26 +14,50 @@ function [ benchmarkNames,benchmarkVariants ] = getBenchmarkList( )
 %
 % Authors:         Joachim Ferreau, Helfried Peyrl, 
 %                  Dimitris Kouzoupis, Andrea Zanelli
-% Last modified:   14/7/2015
+% Last modified:   27/11/2015
 
 
     nBenchmarks = getNumBenchmarks( );
 
     benchmarkNames = cell( nBenchmarks,1 );
     benchmarkVariants = cell( nBenchmarks,1 );
+    benchmarkFeatures = cell( nBenchmarks,1 );
 
+    
+    curWarningState = adjustWarnLevel( WarnLevel.showNone );
     
     for ii=1:nBenchmarks
 
         curName = Benchmarks(ii);
+        fprintf( '*' );
         
         try
+            
             eval( ['benchmark = Benchmark_',char(curName),'();'] );
             benchmarkNames{ii}    = curName;
             benchmarkVariants{ii} = benchmark.variants;
+            
+            % determine features of each variant
+            if ( nargout > 2 )
+                
+                curNumVariants = length(benchmarkVariants{ii});
+                curBenchmarkFeatures = setupBenchmarkFeaturesStruct();
+                curBenchmarkFeatures(2:curNumVariants) = setupBenchmarkFeaturesStruct();
+                for jj=1:curNumVariants
+                    curBenchmarkFeatures(jj) = determineBenchmarkFeatures( benchmarkNames{ii},benchmarkVariants{ii}(jj) );
+                end
+                benchmarkFeatures{ii} = curBenchmarkFeatures;
+                
+            end
+
         catch %err
         end
 
     end
+    
+    fprintf( '\n' );
+    
+    % restore warning state
+    warning( curWarningState );
 
 end

@@ -14,7 +14,7 @@ function [ problem ] = Benchmark_nonlinearCstr( variant )
 %
 % Authors:         Joachim Ferreau, Helfried Peyrl, 
 %                  Dimitris Kouzoupis, Andrea Zanelli
-% Last modified:   14/7/2015
+% Last modified:   30/11/2015
 
 
 % default variant
@@ -85,25 +85,32 @@ problem.x0 = [ 0; 0; 85; 85 ];
 
 
 %% define control scenario
-problem.variants = [1 2];
+problem.variants = [1 2 3];
 
 switch variant
     
     case 1
-        
-        for i = 1:problem(1).ni*5
+        % simulate with LTI model
+        for i = 1:problem.ni+50
             problem.yr{i} = [ 2.14; 1.09; 114.2; 112.9 ];
             problem.ur{i} = [ 14.19; -1113.5 ];
         end
         problem.simModel = [];
         
     case 2
-        % simulate the non-linear model
-        for i = 1:problem(1).ni*5
+        % simulate with non-linear model
+        for i = 1:problem.ni+50
             problem.yr{i} = [ 2.14; 1.09; 114.2; 112.9 ];
             problem.ur{i} = [ 14.19; -1113.5 ];
         end
         problem.simModel = fcnName;
+        
+    case 3
+        problem.ni = 5;
+        for i = 1:problem.ni+50
+            problem.yr{i} = [ 2.14; 1.09; 114.2; 112.9 ];
+            problem.ur{i} = [ 14.19; -1113.5 ];
+        end
         
     otherwise
         error( 'Invalid variant number!' );

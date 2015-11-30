@@ -14,7 +14,7 @@ function [ problem ] = Benchmark_spacecraft( variant )
 %
 % Authors:         Joachim Ferreau, Helfried Peyrl, 
 %                  Dimitris Kouzoupis, Andrea Zanelli
-% Last modified:   14/7/2015
+% Last modified:   30/11/2015
 
 
 % default variant
@@ -33,7 +33,7 @@ problem.info              = setupBenchmarkInfoStruct( );
 problem.info.ID           = uint32(Benchmarks.spacecraft);
 problem.info.name         = 'spacecraft';
 problem.info.description  = 'Spacecraft attitude control problem.';
-problem.info.reference    = 'O. Hegrenaes, J.T. Gravdahl, P. Tondel: Spacecraft attitude control using explicit model predictive control, Automatica, 41, pp. 2107–2114, 2005.';
+problem.info.reference    = 'O. Hegrenaes, J.T. Gravdahl, P. Tondel: Spacecraft attitude control using explicit model predictive control, Automatica, vol. 41, pp. 2107–2114, 2005.';
 problem.info.origin       = Origin.academicExample;
 problem.info.conditioning = Conditioning.undefined;
 problem.info.feasibility  = Feasibility.undefined;
@@ -99,15 +99,12 @@ problem.variants = [1 2];
 switch ( variant )
     
     case 1
-        problem.ni   = 20;
         problem.uIdx = [1 2];
         for i = 1:problem.ni+500
             problem.yr{i} = [0;0;0;0;0;0;0];
         end
         
     case 2
-        problem.ni   = 20;
-        problem.uIdx = 1:10;
         for i = 1:problem.ni+500
             problem.yr{i} = [0;0;0;0;0;0;0];
         end

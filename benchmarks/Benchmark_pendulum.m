@@ -14,7 +14,7 @@ function [ problem ] = Benchmark_pendulum( variant )
 %
 % Authors:         Joachim Ferreau, Helfried Peyrl, 
 %                  Dimitris Kouzoupis, Andrea Zanelli
-% Last modified:   14/7/2015
+% Last modified:   30/11/2015
 
 
 % default variant
@@ -81,13 +81,11 @@ problem.variants = [1 2 3];
 switch ( variant )
     
     case 1
-
         for i=1:problem.ni+150
             problem.yr{i} = [0;0;0];
         end
         
     case 2
-        
         for i=1:problem.ni+150
             problem.yr{i} = [0;0;0];
         end
@@ -96,12 +94,10 @@ switch ( variant )
         problem.P = diag([problem.P(1,1) problem.P(2,2) problem.P(3,3)]);
         
     case 3
-        % ???
-        problem.ni = 2;  
-        for i=1:problem.ni+300
+        problem.ni = 5;  
+        for i=1:problem.ni+200
             problem.yr{i} = [0;0;0];
         end
-
       
     otherwise
         error( 'Invalid variant number!' );

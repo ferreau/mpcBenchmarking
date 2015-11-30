@@ -85,32 +85,24 @@ problem.variants = [1 2 3];
 switch ( variant )
     
     case 1
-       
         problem.x0 = [ 0.1, 0.05, 0.1, 0.05 ]';
         for i=1:450
             problem.yr{i} = [0;0];
         end
-
         
     case 2
-       
         problem.x0 = [ 0.0, 0.0, 0.1, 0.5 ]';
         for i=1:450
             problem.yr{i} = [0;0];
         end
-
         
     case 3
-       
         problem.x0 = [ 0.1, 0.05, 0.1, 0.05 ]';
-        
         problem.ymax =  [0.12; 0.12];             % all constraint fields are optional
         problem.ymin = -[0.12; 0.12];             % (default values -inf/inf)
-        
         for i=1:450
             problem.yr{i} = [0;0];
         end
-
         
     otherwise
         error( 'Invalid variant number!' );

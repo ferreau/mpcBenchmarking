@@ -14,7 +14,7 @@ function [ problem ] = Benchmark_helicopter( variant )
 %
 % Authors:         Joachim Ferreau, Helfried Peyrl, 
 %                  Dimitris Kouzoupis, Andrea Zanelli
-% Last modified:   14/7/2015
+% Last modified:   30/11/2015
 
 
 % default variant
@@ -104,43 +104,31 @@ problem.simModel = [];            % optional (default, simulation model same as 
 
 
 %% define control scenario
-problem.variants = [1 2 3 4 5];
+problem.variants = [1 2 3];
 
 switch ( variant )
     
     case 1
-        
         for i=1:problem.ni+150
             problem.yr{i} = [0;0;0;0;0;0];
-        end        
-        
+        end                
 
     case 2
-        
         problem.ni = 20;
         for i=1:problem.ni+150
             problem.yr{i} = [0;0;0;0;0;0];
         end
         
-
-    case 4
-        
+    case 3
         problem.ni = 10;
-        for i=1:problem.ni+50
+        for i=1:problem.ni+100
             problem.yr{i} = [0;0;0;0;0;0];
         end
         [~, problem.P] = dlqr(problem.A, problem.B, problem.Q, ...
-            problem.R, problem.S);     % optional (default, zero matrix)
+            problem.R, problem.S);
         
         problem.P = diag(diag(problem.P));
-        problem.R  = 1*eye(2);
-
-
-    case 5
-        
-        % variant 5
-        problem.x0 = rand(2,15); % 15 random initial conditions
-      
+        problem.R  = 1*eye(2);     
 
     otherwise
         error( 'Invalid variant number!' );

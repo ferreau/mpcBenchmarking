@@ -16,7 +16,7 @@ classdef Benchmarks < uint32
         aircraft                 (1)
         ballOnPlate              (2)
         dcMotor                  (3)
-        toyExample1              (4)
+        toyExample               (4)
         forcesExample            (5)
         helicopter               (6)
         nonlinearCstr            (7)

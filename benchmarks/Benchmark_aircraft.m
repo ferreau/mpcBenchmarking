@@ -14,7 +14,7 @@ function [ problem ] = Benchmark_aircraft( variant )
 %
 % Authors:         Joachim Ferreau, Helfried Peyrl, 
 %                  Dimitris Kouzoupis, Andrea Zanelli
-% Last modified:   14/7/2015
+% Last modified:   30/11/2015
 
 
 
@@ -63,7 +63,6 @@ if variant < 10
 else % variant >= 10: modified model so that y = x
     
     Cc = eye(4);
-
     Dc = zeros(4,2);
   
 end
@@ -94,57 +93,47 @@ problem.R  = zeros(2);
 
 problem.x0   = zeros(4,1);
 problem.ni   = 10;
-problem.uIdx = [1 2 3 6]; % Control horizon = 3
+problem.uIdx = [1 2 3 6]; % i.e. control horizon = 3+1 steps
 
 
 %% define control scenario
-problem.variants = [1 2 3 10 11 12 13 14];
+problem.variants = [1 2 3 4 10 11 12 13];
 
 switch ( variant )
     
     case 1
-
         % original variant from reference
-        for i = 1:problem(1).ni*5
+        for i = 1:problem(1).ni+50
             problem.yr{i} = [0;10];
         end
         
-        
     case 2
-        
         % same as original variant but with control horizon same as
         % prediction horizon. More computationally demanding. A small 
         % weight on inputs is added to avoid oscilations in solution
-        
-        for i = 1:problem(1).ni*7
+        for i = 1:problem(1).ni+50
             problem.yr{i} = [0;10];
         end
         problem.uIdx = [];
         problem.R    = 0.001*eye(2);  
-
         
     case 3
-        
-        % original variant from reference (but without state bounds
-        for i = 1:problem(1).ni*5
+        % original variant from reference (but without state bounds)
+        for i = 1:problem(1).ni+50
             problem.yr{i} = [0;10];
         end
         problem.ymax = [];
         problem.ymin = [];
-
         
-    case 4
-        
+    case 4      
         % original variant from reference but without move blocking
         problem.uIdx = [];
-        for i = 1:problem(1).ni*5
+        for i = 1:problem(1).ni+50
             problem.yr{i} = [0;10];
         end
 
-        
     case 10
-        
-        for i = 1:problem(1).ni*5
+        for i = 1:problem(1).ni+50
             problem.yr{i} = [0; 0; 0; 10];
         end
         % setting to zero the states that we do not care about so as to
@@ -152,45 +141,24 @@ switch ( variant )
         problem.Q(1,1) = 0;
         problem.Q(3,3) = 0;
         
-        
     case 11
-        
-        problem.Q(1,1) = 0.1;       % to prevent 'instability' of state 1
-        problem.Q(3,3) = 0;
-        
-        problem.uIdx = [];            % to make more computationally expensive
-        problem.R    = 0.0001*eye(2); % to avoid oscilations
-        
-        for i = 1:problem(1).ni*5
-            problem.yr{i} = [0; 0; 0; 10];  % TODO: probably delete and keep only variant 12
-        end
-        
-        
-    case 12
-        
         % STANDFORD PAPER - NUMERICAL EXAMPLE
-        
         problem.Q    = diag([10^-4 100 10^-3 100]);
         problem.R    = diag([10^-2 10^-2]);
         problem.P    = problem.Q;
         problem.uIdx = []; % not mentioned in paper
-        
         for i = 1:35
             problem.yr{i} = [0; 0; 0; 10];
         end
-        
-        for i = 36:80
+        for i = 36:100
             problem.yr{i} = [0; 0; 0; 0];
         end
         
-        
-    case 13
-        
+    case 12
         problem.Q    = diag([10^-4 100 10^-3 100]);
         problem.R    = diag([10^-2 10^-2]);
         problem.P    = problem.Q;
         problem.uIdx = [];
-        
         for i = 1:50
             problem.yr{i} = [0; 0; 0; 10];
         end
@@ -207,16 +175,13 @@ switch ( variant )
             problem.yr{i} = [0; 0; 0; 0];
         end
 
-        
-    case 14
-        
+    case 13
         problem.Q    = diag([10^-4 100 10^-3 100]);
         problem.R    = diag([10^-2 10^-2]);
         problem.P    = problem.Q;
         problem.uIdx = [];
         problem.ni   = 50;
         problem.lookAhead = Boolean.no;
-        
         for i = 1:50
             problem.yr{i} = [0; 0; 0; 10];
         end
@@ -233,10 +198,8 @@ switch ( variant )
             problem.yr{i} = [0; 0; 0; 0];
         end
 
-        
     otherwise
         error( 'Invalid variant number!' );
-        
 end
 
 end

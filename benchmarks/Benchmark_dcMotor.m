@@ -14,7 +14,7 @@ function [ problem ] = Benchmark_dcMotor( variant )
 %
 % Authors:         Joachim Ferreau, Helfried Peyrl, 
 %                  Dimitris Kouzoupis, Andrea Zanelli
-% Last modified:   14/7/2015
+% Last modified:   30/11/2015
 
 
 % default variant
@@ -111,34 +111,28 @@ problem.lookAhead = Boolean.no;
 MaxValue     =  10; %  2
 MinValue     = -10; % -2
 
-problem.variants = [1 2];
+problem.variants = [1 2 3 4 5 6];
 
 switch variant
         
     case 1 % square wave reference signal
-        
         problem.ni   = 10;
         problem.uIdx = [1 2];
         nPeriods     = 2;
         PeriodLength = 100;
         problem.yr   = generateSquareWave( PeriodLength,nPeriods,MaxValue,MinValue,r );
         
-        
     case 2 % square wave reference signal
-        
         problem.ni = 20;
         nPeriods     = 2;
         PeriodLength = 100;
         problem.yr   = generateSquareWave( PeriodLength,nPeriods,MaxValue,MinValue,r );
         
-        
     case 3 % square wave reference signal
-        
         problem.ni = 100;
         nPeriods     = 2;
         PeriodLength = 100;
         problem.yr   = generateSquareWave( PeriodLength,nPeriods,MaxValue,MinValue,r );
-        
         
     case 4 % square wave reference signal, more rescrictive input constraints
         problem.umax =  30;
@@ -150,7 +144,6 @@ switch variant
         
         
     case 5 % square wave reference signal , more polytopic input constraints (compare with variant 9 with a different R)
-        
         MaxValue     =  3;
         MinValue     = -3;
         problem.dmax =  [5 theta_max]';
@@ -160,8 +153,7 @@ switch variant
         PeriodLength = 100;
         problem.yr   = generateSquareWave( PeriodLength,nPeriods,MaxValue,MinValue,r );
         
-        
-    case 9 % square wave reference signal
+    case 6 % square wave reference signal
         problem.R = 1;
         MaxValue     =  3;
         MinValue     = -3;
@@ -172,17 +164,9 @@ switch variant
         PeriodLength = 100;
         problem.yr   = generateSquareWave( PeriodLength,nPeriods,MaxValue,MinValue,r );
     
-        
     otherwise
         error( 'Invalid variant number!' );
 
 end
 
-%problem.uIdx = 1:5; % Different control horizon
-
 end
-
-% Tstop=40*Ts;  
-
-% REFERENCE: 
-% http://www.sciencedirect.com/science/article/pii/S0005109897002136

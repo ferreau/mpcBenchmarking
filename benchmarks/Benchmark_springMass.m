@@ -81,51 +81,50 @@ Sc = zeros(6,2);
 [~,Pc] = lqr(Ac,Bc,Qc,Rc,Sc);  
 
 % for now:
-problem.Q  = problem.Ts*eye(6);
-problem.R  = problem.Ts*eye(2);
+problem.Q  = eye(6);
+problem.R  = eye(2);
 [~,problem.P] = dlqr(problem.A,problem.B,problem.Q,problem.R);
 
 
 %% define control scenario
-problem.variants = [1 2 3];
+problem.variants = [1 2 3 4];
 
 switch variant
     
     case 1
-        % literature variant
+        % close to literature variant
+        % adjusted x0 to yield feasible QPs
         problem.ni = 200;
-        problem.x0 = [0 0 3.5 3.5 0 0]';
-        %for i = 1:problem.ni + 1500
-        %    problem.yr{i} = [0;0;0;0;0;0];
-        %end
+        problem.x0 = 0.88*[0 0 3.5 3.5 0 0]';
+        for i = 1:problem.ni+1500
+            problem.yr{i} = [0;0;0;0;0;0];
+        end
         
-
     case 2
         % 'easier variant' in closed loop
         problem.ni = 20;
         problem.x0 = 0.5*[0 0 3.5 3.5 0 0]';
-        for i = 1:problem.ni + 300
+        for i = 1:problem.ni+500
             problem.yr{i} = [0;0;0;0;0;0];
         end
-
-
+        
     case 3
-        % added for paper
-        problem.ni = 40;
-        problem.x0 = 0.5*[0 0 3.5 3.5 0 0]';
-        for i = 1:problem.ni + 300
-            problem.yr{i} = [0;0;0;0;0;0];
-        end
-       
-    case 4
-        % 'easier variant' in closed loop
+        % 'easier variant' in closed loop and diagonal terminal weight
         problem.ni = 20;
         problem.x0 = 0.5*[0 0 3.5 3.5 0 0]';
-        for i = 1:problem.ni + 300
+        for i = 1:problem.ni+500
             problem.yr{i} = [0;0;0;0;0;0];
         end
         problem.P = diag(diag(problem.P));
-        
+
+    case 4
+        % 'easier variant' in closed loop with somewhat longer horizon
+        problem.ni = 40;
+        problem.x0 = 0.5*[0 0 3.5 3.5 0 0]';
+        for i = 1:problem.ni+500
+            problem.yr{i} = [0;0;0;0;0;0];
+        end
+               
     otherwise
         error( 'Invalid variant number!' );
 end

@@ -14,7 +14,7 @@ function [ problem ] = Benchmark_robotArm( variant )
 %
 % Authors:         Joachim Ferreau, Helfried Peyrl, 
 %                  Dimitris Kouzoupis, Andrea Zanelli
-% Last modified:   25/11/2015
+% Last modified:   30/11/2015
 
 
 % default variant
@@ -82,25 +82,22 @@ problem.simModel  = [];             % optional (default, simulation model same a
 
 
 %% define control scenario
-problem.variants = [1];
+problem.variants = [1 2];
 
 switch ( variant )
     
     case 1
-       
         % original formulation as in reference
         problem.ni = 5;
-        for i=1:405
+        for i=1:problem.ni+400
             problem.yr{i} = zeros( 4,1 );
         end
         
-        
     case 2
-       
         % longer control horizon to improve tracking and to
         % make more constraints active
         problem.ni = 20;
-        for i=1:405
+        for i=1:problem.ni+400
             problem.yr{i} = zeros( 4,1 );
         end
 
