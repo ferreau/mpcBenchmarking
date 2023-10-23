@@ -1,5 +1,5 @@
-function [ problem ] = Benchmark_toyExample1( variant )
-%Benchmark_toyExample1 does something.
+function [ problem ] = Benchmark_toyExample( variant )
+%Benchmark_toyExample does something.
 %
 %Inputs:
 %  (tbd)
@@ -27,11 +27,11 @@ end
 problem = Benchmark(variant);
 
 % try to load benchmark from mat file
-problem = problem.loadFromMatFile( 'toyExample1',variant );
+problem = problem.loadFromMatFile( 'toyExample',variant );
 
 problem.info              = setupBenchmarkInfoStruct( );
-problem.info.ID           = uint32(Benchmarks.toyExample1);
-problem.info.name         = 'toyExample1';
+problem.info.ID           = uint32(Benchmarks.toyExample);
+problem.info.name         = 'toyExample';
 problem.info.description  = 'A simple toy example.';
 problem.info.reference    = 'Problem Set 6 - Numerical Optimization Methods, Model Predictive Control course at ETH Zurich in 2013';
 problem.info.origin       = Origin.academicExample;
