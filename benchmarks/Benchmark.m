@@ -988,7 +988,8 @@ classdef Benchmark < BenchmarkData
                 error( ['Unable to export variant no. ',num2str(variant),'!'] );
             end
             
-            caesarPath = getCaesarPath( );
+            caesarPath = '';
+            sep = '/';
             eval( ['problem = Benchmark_',char(obj.getName()),'( variant );'] );
             eval( ['save ',caesarPath,'benchmarks',sep,'matFiles',sep,obj.getLabel(variant),'.mat problem;'] );
 

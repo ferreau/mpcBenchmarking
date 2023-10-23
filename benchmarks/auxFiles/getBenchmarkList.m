@@ -24,7 +24,7 @@ function [ benchmarkNames,benchmarkVariants,benchmarkFeatures ] = getBenchmarkLi
     benchmarkFeatures = cell( nBenchmarks,1 );
 
     
-    curWarningState = adjustWarnLevel( WarnLevel.showNone );
+    %curWarningState = adjustWarnLevel( WarnLevel.showNone );
     
     for ii=1:nBenchmarks
 
@@ -58,6 +58,6 @@ function [ benchmarkNames,benchmarkVariants,benchmarkFeatures ] = getBenchmarkLi
     fprintf( '\n' );
     
     % restore warning state
-    warning( curWarningState );
+    %warning( curWarningState );
 
 end

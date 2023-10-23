@@ -31,13 +31,13 @@ classdef Benchmarks < uint32
         robotArm                 (16)
         nonlinearChain           (17)
         fiordosExample           (18)
-        overheadCrane            (19)
-        polytopicTerminal        (20)
+        %overheadCrane            (22) % gives an error
+        polytopicTerminal        (19)
         ... % industrial, not part of public benchmark collection
-        compressor               (21)
+        compressor               (20)
         ... % under development
-        nonlinearAcDrive         (22)
-        %powerNetworkSystem      (xx)
+        nonlinearAcDrive         (21)
+        %powerNetworkSystem      (xk)
         %underwaterVehicle       (xx)
         %dieselEngine            (xx)
         %linearizedCstr          (xx)
